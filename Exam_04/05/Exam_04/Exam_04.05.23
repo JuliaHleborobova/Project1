@@ -1,1 +1,122 @@
+# 1. Написать ф-цию, кот. будет принимать номер кредитной карты и
+# показывать только последние 4 цифры.
+# Остальные цифры должны заменяться звёздочкой.
 
+
+def card():
+    a = input("Номер карты (16 цифр): ")
+    b = []  # для звездочек
+    c = []  # последние 4 цифры
+
+    for i in a[0:12]:
+        i = "*"
+        b.append(i)
+
+    for i in a[12:16]:
+        c.append(i)
+
+    print('_' * 20)
+    print("ВАША КАРТА:")
+    print(b + c)
+    print('_' * 20)
+
+
+card()
+
+
+
+# 2.Написать функцию, которая проверяет является ли слово палиндромом.
+
+def slovo():
+    a = input("Введите строку: ")
+    b = a.replace(" ", "").lower()  # меняем пробелы на пустоту и приводим к нижнему регистру
+
+    if b == b[::-1]:
+        print("это палиндром")
+    else:
+        print("не палиндром")
+
+
+slovo()
+
+
+#3. Задача про томаты.
+
+class Tomato:
+    states = {1: "ничего", 2: "цветение", 3: "зеленый", 4: "красный"}
+
+    def init(self, index):
+        self._index = index
+        self._state = 1
+
+    def grow(self):
+        if self._state < 4:
+            self._state += 1
+
+    def is_ripe(self):
+        if self._state == 4:
+            return True
+        else:
+            return False
+
+class TomatoBush:
+
+    def init(self, amount):
+        self.tomatoes = [Tomato(index) for index in range(1, amount)]
+
+    def grow_all(self):
+        for tomato in self.tomatoes:
+            tomato.grow()
+
+    def all_are_ripe(self):
+        return all([tomato.is_ripe() for tomato in self.tomatoes])
+
+    def give_away_all(self):
+        self.tomatoes = []
+
+
+class Gardener:
+
+    def init(self, name, plant):
+        self.name = name
+        self._plant = plant
+
+    def work(self):
+        self._plant.grow_all()
+
+    def harvest(self):
+        if self._plant.all_are_ripe():
+            print('Урожай собран!')
+            self._plant.give_away_all()
+        else:
+            print('Урожай еще не созрел')
+
+    @staticmethod
+    def knowledge_base():
+        print("Справка по садоводству: чтобы вырастить хороший урожай томатов за ними надо тщательно ухаживать."
+            "После цветения плоды становятся сперва зелеными, потом красными.")
+
+
+Gardener.knowledge_base()
+bush1 = TomatoBush(3)  # 3 томата на кусте
+gardener = Gardener('Thomas', bush1)
+
+# Ухаживаем за кустом с помидорами
+gardener.work()
+gardener.work()
+gardener.work()
+
+# Собираем урожай
+gardener.harvest()
+
+# Продолжаем ухаживать  за кустом, пока томаты не созреют
+gardener.work()
+gardener.harvest()
+gardener.work()
+gardener.harvest()
+gardener.work()
+gardener.harvest()
+
+# Собираем урожай после созревания всех томатов
+gardener.work()
+gardener.harvest()
